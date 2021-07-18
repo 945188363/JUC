@@ -1,6 +1,9 @@
 package com.njh.JUCTest.ThreadLocal;
 
 
+import jdk.jfr.Description;
+
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
 
@@ -10,6 +13,35 @@ import java.util.HashMap;
  * @Description:a test for threadLocal
  */
 public class ThreadLocalTest {
+    // 多线程隔离原理：
+    // ThreadLocal.ThreadLocalMap为static class，整个实例中只有一个副本。
+    // ThreadLocal.ThreadLocalMap的数组Entry也是static class，整个实例中只有一个副本。
+    // Entry是一个pair， key是当前Thread的ThreadLocal实例， value是ThreadLocal的值。
+    /*  public class ThreadLocal<T> {
+     *      static class ThreadLocalMap {
+     *           static class Entry extends WeakReference<ThreadLocal<?>> {
+     *               Object value;
+     *               Entry(ThreadLocal<?> k, Object v) {
+     *                   super(k);
+     *                   value = v;
+     *              }
+     *          }
+     *      }
+     *      public T get() {
+     *          Thread t = Thread.currentThread();
+     *          ThreadLocalMap map = t.threadLocals;
+     *          if (map != null) {
+     *              ThreadLocalMap.Entry e = map.getEntry(this);
+     *              if (e != null) {
+     *                  T result = (T)e.value;
+     *                  return result;
+     *              }
+     *          }
+     *          return setInitialValue();
+     *      }
+     *  }
+     */
+
     private static ThreadLocal<HashMap<String,String>> city = new ThreadLocal<>();
 
     public static void initCity(){

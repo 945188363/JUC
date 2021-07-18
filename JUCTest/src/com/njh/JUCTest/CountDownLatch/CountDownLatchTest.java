@@ -1,7 +1,5 @@
 package com.njh.JUCTest.CountDownLatch;
 
-import com.njh.JUCTest.CountDownLatch.MyThread;
-
 import java.util.concurrent.*;
 
 public class CountDownLatchTest {
